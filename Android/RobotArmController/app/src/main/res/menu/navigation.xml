@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_run"
+        android:icon="@drawable/ic_run"
+        android:title="@string/title_run" />
+
+    <item
+        android:id="@+id/navigation_init"
+        android:icon="@drawable/ic_init"
+        android:title="@string/title_init" />
+
+    <item
+        android:id="@+id/navigation_loop"
+        android:icon="@drawable/ic_loop"
+        android:title="@string/title_loop" />
+
+</menu>

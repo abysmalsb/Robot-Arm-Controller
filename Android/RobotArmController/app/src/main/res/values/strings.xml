@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Robot Arm Controller</string>
+    <string name="title_activity_configure">Configure</string>
+    <string name="title_init">Init</string>
+    <string name="title_loop">Loop</string>
+    <string name="title_run">Run</string>
+</resources>
