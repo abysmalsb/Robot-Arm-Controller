@@ -13,9 +13,9 @@
 
 // Used pins
 #define GRIPPER_SERVO 9
-#define UPPER_WRIST_SERVO 6
-#define LOWER_WRIST_SERVO 5
-#define BASE_ROTATOR_WRIST_SERVO 3
+#define UPPER_JOINT_SERVO 6
+#define LOWER_JOINT_SERVO 5
+#define BASE_ROTATOR_JOINT_SERVO 3
 
 // Gripper states
 #define GRIPPER_OPEN 0
@@ -39,17 +39,17 @@
 #define MOVE_GRIPPER 'G'
 #define MOVE_ARM 'A'
 
-Servo gripper, upperWrist, lowerWrist, baseRotator;
+Servo gripper, upperJoint, lowerJoint, baseRotator;
 
 unsigned int movementDelay = 5;
 
 int gripperState;
-int targetUpperWristAngle;
-int targetLowerWristAngle;
+int targetUpperJointAngle;
+int targetLowerJointAngle;
 int targetBaseRotatorAngle;
 
-float currentUpperWristAngle, currentLowerWristAngle, currentBaseRotatorAngle;
-float upperWristStep, lowerWristStep, baseRotatorStep;
+float currentUpperJointAngle, currentLowerJointAngle, currentBaseRotatorAngle;
+float upperJointStep, lowerJointStep, baseRotatorStep;
 
 unsigned long lastStepTime = 0;
 
@@ -57,19 +57,19 @@ void setup() {
   Serial1.begin(115200);
 
   gripper.attach(GRIPPER_SERVO);
-  upperWrist.attach(UPPER_WRIST_SERVO);
-  lowerWrist.attach(LOWER_WRIST_SERVO);
-  baseRotator.attach(BASE_ROTATOR_WRIST_SERVO);
+  upperJoint.attach(UPPER_JOINT_SERVO);
+  lowerJoint.attach(LOWER_JOINT_SERVO);
+  baseRotator.attach(BASE_ROTATOR_JOINT_SERVO);
 
   // Setting default position on starting. Specific for your robot, so you 
   // might need to adjust it to yours
   gripperState = GRIPPER_CLOSED_SOFT;
-  targetUpperWristAngle = currentUpperWristAngle = 140;
-  targetLowerWristAngle = currentLowerWristAngle = 45;
+  targetUpperJointAngle = currentUpperJointAngle = 140;
+  targetLowerJointAngle = currentLowerJointAngle = 45;
   targetBaseRotatorAngle = currentBaseRotatorAngle = 85;
 
   moveGripper(gripperState);
-  moveTo(targetUpperWristAngle, targetLowerWristAngle, targetBaseRotatorAngle);
+  moveTo(targetUpperJointAngle, targetLowerJointAngle, targetBaseRotatorAngle);
 }
 
 void loop() {
@@ -88,11 +88,11 @@ void loop() {
   }
 
   if (millis() - lastStepTime >= movementDelay) {
-    if (targetUpperWristAngle != round(currentUpperWristAngle)) currentUpperWristAngle -= upperWristStep;
-    if (targetLowerWristAngle != round(currentLowerWristAngle)) currentLowerWristAngle -= lowerWristStep;
+    if (targetUpperJointAngle != round(currentUpperJointAngle)) currentUpperJointAngle -= upperJointStep;
+    if (targetLowerJointAngle != round(currentLowerJointAngle)) currentLowerJointAngle -= lowerJointStep;
     if (targetBaseRotatorAngle != round(currentBaseRotatorAngle)) currentBaseRotatorAngle -= baseRotatorStep;
 
-    moveTo(currentUpperWristAngle, currentLowerWristAngle, currentBaseRotatorAngle);
+    moveTo(currentUpperJointAngle, currentLowerJointAngle, currentBaseRotatorAngle);
 
     printPosition();
     lastStepTime = millis();
@@ -115,15 +115,15 @@ void updateArmMovement() {
   else
     return;
 
-  int upperWristAngle;
+  int upperJointAngle;
   if (Serial1.available() > 0)
-    upperWristAngle = Serial1.parseInt();
+    upperJointAngle = Serial1.parseInt();
   else
     return;
 
-  int lowerWristAngle;
+  int lowerJointAngle;
   if (Serial1.available() > 0)
-    lowerWristAngle = Serial1.parseInt();
+    lowerJointAngle = Serial1.parseInt();
   else
     return;
 
@@ -139,11 +139,11 @@ void updateArmMovement() {
   // mDelay is used as speed. Instantious movement would be too fast and it could
   // cause hardware issues.
   movementDelay = mDelay >= MIN_MOVEMENT_DELAY ? mDelay : MIN_MOVEMENT_DELAY;
-  targetUpperWristAngle = upperWristAngle;
-  targetLowerWristAngle = lowerWristAngle;
+  targetUpperJointAngle = upperJointAngle;
+  targetLowerJointAngle = lowerJointAngle;
   targetBaseRotatorAngle = baseRotatorAngle;
-  upperWristStep = (currentUpperWristAngle - targetUpperWristAngle) / 100;
-  lowerWristStep = (currentLowerWristAngle - targetLowerWristAngle) / 100;
+  upperJointStep = (currentUpperJointAngle - targetUpperJointAngle) / 100;
+  lowerJointStep = (currentLowerJointAngle - targetLowerJointAngle) / 100;
   baseRotatorStep = (currentBaseRotatorAngle - targetBaseRotatorAngle) / 100;
 }
 
@@ -171,10 +171,10 @@ void moveGripper(int state) {
   }
 }
 
-void moveTo(int upperWristAngle, int lowerWristAngle, int baseRotatorAngle) {
+void moveTo(int upperJointAngle, int lowerJointAngle, int baseRotatorAngle) {
   // Moving the robot arm segments with updating the servos
-  upperWrist.write(upperWristAngle);
-  lowerWrist.write(lowerWristAngle);
+  upperJoint.write(upperJointAngle);
+  lowerJoint.write(lowerJointAngle);
   baseRotator.write(baseRotatorAngle);
 }
 
@@ -184,9 +184,9 @@ void printPosition() {
   Serial1.print(" ");
   Serial1.print(gripperState);
   Serial1.print(" ");
-  Serial1.print(round(currentUpperWristAngle));
+  Serial1.print(round(currentUpperJointAngle));
   Serial1.print(" ");
-  Serial1.print(round(currentLowerWristAngle));
+  Serial1.print(round(currentLowerJointAngle));
   Serial1.print(" ");
   Serial1.println(round(currentBaseRotatorAngle));
 }

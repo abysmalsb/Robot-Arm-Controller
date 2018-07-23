@@ -15,18 +15,18 @@
         android:text="Gripper:"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rotatorWrist" />
+        app:layout_constraintTop_toBottomOf="@+id/rotatorJoint" />
 
     <TextView
-        android:id="@+id/lowerWristLabel"
+        android:id="@+id/lowerJointLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Lower Wrist Angle:"
+        android:text="Lower Joint Angle:"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/upperWrist" />
+        app:layout_constraintTop_toBottomOf="@+id/upperJoint" />
 
     <Button
         android:id="@+id/save"
@@ -57,7 +57,7 @@
         app:layout_constraintTop_toBottomOf="@+id/speedLabel" />
 
     <SeekBar
-        android:id="@+id/rotatorWrist"
+        android:id="@+id/rotatorJoint"
         style="@android:style/Widget.SeekBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -69,15 +69,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rotatorWristLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/rotatorJointLabel" />
 
     <TextView
-        android:id="@+id/upperWristLabel"
+        android:id="@+id/upperJointLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Upper Wrist Angle:"
+        android:text="Upper Joint Angle:"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/speed" />
@@ -106,7 +106,7 @@
         app:layout_constraintTop_toBottomOf="@+id/gripperLabel" />
 
     <SeekBar
-        android:id="@+id/lowerWrist"
+        android:id="@+id/lowerJoint"
         style="@android:style/Widget.SeekBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -118,10 +118,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lowerWristLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/lowerJointLabel" />
 
     <SeekBar
-        android:id="@+id/upperWrist"
+        android:id="@+id/upperJoint"
         style="@android:style/Widget.SeekBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -133,17 +133,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/upperWristLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/upperJointLabel" />
 
     <TextView
-        android:id="@+id/rotatorWristLabel"
+        android:id="@+id/rotatorJointLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Rotator Wrist Angle:"
+        android:text="Rotator Joint Angle:"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lowerWrist" />
+        app:layout_constraintTop_toBottomOf="@+id/lowerJoint" />
 
 </android.support.constraint.ConstraintLayout>

@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.LinkedList;
@@ -119,14 +118,14 @@ public class ConfigureActivity extends AppCompatActivity implements ConfigureMen
     }
 
     @Override
-    public void onPositionChanged(int speed, int upperWristAngle, int lowerWristAngle, int rotatorWristAngle) {
-        String command = getRobotArmPositionCommand(speed, upperWristAngle, lowerWristAngle, rotatorWristAngle);
+    public void onPositionChanged(int speed, int upperJointAngle, int lowerJointAngle, int rotatorJointAngle) {
+        String command = getRobotArmPositionCommand(speed, upperJointAngle, lowerJointAngle, rotatorJointAngle);
         tcpClient.sendMessage(command);
     }
 
     @Override
-    public void onPositionSaved(boolean isInit, int speed, int upperWristAngle, int lowerWristAngle, int rotatorWristAngle) {
-        String command = getRobotArmPositionCommand(speed, upperWristAngle, lowerWristAngle, rotatorWristAngle);
+    public void onPositionSaved(boolean isInit, int speed, int upperJointAngle, int lowerJointAngle, int rotatorJointAngle) {
+        String command = getRobotArmPositionCommand(speed, upperJointAngle, lowerJointAngle, rotatorJointAngle);
         saveCommand(isInit, command);
     }
 
@@ -142,8 +141,8 @@ public class ConfigureActivity extends AppCompatActivity implements ConfigureMen
         saveCommand(isInit, command);
     }
 
-    private String getRobotArmPositionCommand(int speed, int upperWristAngle, int lowerWristAngle, int rotatorWristAngle) {
-        return "A " + speed + " " + upperWristAngle + " " + lowerWristAngle + " " + rotatorWristAngle;
+    private String getRobotArmPositionCommand(int speed, int upperJointAngle, int lowerJointAngle, int rotatorJointAngle) {
+        return "A " + speed + " " + upperJointAngle + " " + lowerJointAngle + " " + rotatorJointAngle;
     }
 
     private String getRobotGripperMoveCommand(boolean released) {

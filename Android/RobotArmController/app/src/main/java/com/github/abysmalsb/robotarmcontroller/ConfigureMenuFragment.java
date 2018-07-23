@@ -19,18 +19,18 @@ public class ConfigureMenuFragment extends Fragment {
     private boolean isInit;
 
     private boolean previousGripperState;
-    private int previousUpperWristAngle;
-    private int previousLowerWristAngle;
-    private int previousRotatorWristAngle;
+    private int previousUpperJointAngle;
+    private int previousLowerJointAngle;
+    private int previousRotatorJointAngle;
 
     private OnRobotStateUpdated mListener;
 
     private Button saveButton;
     private ToggleButton gripperToggle;
     private SeekBar speedSeekBar;
-    private SeekBar upperWristAngleSeekBar;
-    private SeekBar lowerWristAngleSeekBar;
-    private SeekBar rotatorWristAngleSeekBar;
+    private SeekBar upperJointAngleSeekBar;
+    private SeekBar lowerJointAngleSeekBar;
+    private SeekBar rotatorJointAngleSeekBar;
 
     public ConfigureMenuFragment() {
         // Required empty public constructor
@@ -60,9 +60,9 @@ public class ConfigureMenuFragment extends Fragment {
         saveButton = view.findViewById(R.id.save);
         gripperToggle = view.findViewById(R.id.gripper);
         speedSeekBar = view.findViewById(R.id.speed);
-        upperWristAngleSeekBar = view.findViewById(R.id.upperWrist);
-        lowerWristAngleSeekBar = view.findViewById(R.id.lowerWrist);
-        rotatorWristAngleSeekBar = view.findViewById(R.id.rotatorWrist);
+        upperJointAngleSeekBar = view.findViewById(R.id.upperJoint);
+        lowerJointAngleSeekBar = view.findViewById(R.id.lowerJoint);
+        rotatorJointAngleSeekBar = view.findViewById(R.id.rotatorJoint);
 
         saveButton.setText("Save " + (isInit ? "init" : "loop") + " position");
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -74,17 +74,17 @@ public class ConfigureMenuFragment extends Fragment {
                     previousGripperState = currentGripperState;
                 }
                 int speed = speedSeekBar.getProgress();
-                int currentUpperWristAngle = upperWristAngleSeekBar.getProgress();
-                int currentLowerWristAngle = lowerWristAngleSeekBar.getProgress();
-                int currentRotatorWristAngle = rotatorWristAngleSeekBar.getProgress();
+                int currentUpperJointAngle = upperJointAngleSeekBar.getProgress();
+                int currentLowerJointAngle = lowerJointAngleSeekBar.getProgress();
+                int currentRotatorJointAngle = rotatorJointAngleSeekBar.getProgress();
 
-                if (previousUpperWristAngle != currentUpperWristAngle ||
-                        previousLowerWristAngle != currentLowerWristAngle ||
-                        previousRotatorWristAngle != currentRotatorWristAngle) {
-                    mListener.onPositionSaved(isInit, SPEED_CONVERT - speed, currentUpperWristAngle, currentLowerWristAngle, currentRotatorWristAngle);
-                    previousUpperWristAngle = currentUpperWristAngle;
-                    previousLowerWristAngle = currentLowerWristAngle;
-                    previousRotatorWristAngle = currentRotatorWristAngle;
+                if (previousUpperJointAngle != currentUpperJointAngle ||
+                        previousLowerJointAngle != currentLowerJointAngle ||
+                        previousRotatorJointAngle != currentRotatorJointAngle) {
+                    mListener.onPositionSaved(isInit, SPEED_CONVERT - speed, currentUpperJointAngle, currentLowerJointAngle, currentRotatorJointAngle);
+                    previousUpperJointAngle = currentUpperJointAngle;
+                    previousLowerJointAngle = currentLowerJointAngle;
+                    previousRotatorJointAngle = currentRotatorJointAngle;
                 }
             }
         });
@@ -99,10 +99,10 @@ public class ConfigureMenuFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int value, boolean b) {
                 int speed = speedSeekBar.getProgress();
-                int upperWristAngle = upperWristAngleSeekBar.getProgress();
-                int lowerWristAngle = lowerWristAngleSeekBar.getProgress();
-                int rotatorWristAngle = rotatorWristAngleSeekBar.getProgress();
-                mListener.onPositionChanged(SPEED_CONVERT - speed, upperWristAngle, lowerWristAngle, rotatorWristAngle);
+                int upperJointAngle = upperJointAngleSeekBar.getProgress();
+                int lowerJointAngle = lowerJointAngleSeekBar.getProgress();
+                int rotatorJointAngle = rotatorJointAngleSeekBar.getProgress();
+                mListener.onPositionChanged(SPEED_CONVERT - speed, upperJointAngle, lowerJointAngle, rotatorJointAngle);
             }
 
             @Override
@@ -115,14 +115,14 @@ public class ConfigureMenuFragment extends Fragment {
         };
 
         speedSeekBar.setOnSeekBarChangeListener(seekBarChangeListener);
-        upperWristAngleSeekBar.setOnSeekBarChangeListener(seekBarChangeListener);
-        lowerWristAngleSeekBar.setOnSeekBarChangeListener(seekBarChangeListener);
-        rotatorWristAngleSeekBar.setOnSeekBarChangeListener(seekBarChangeListener);
+        upperJointAngleSeekBar.setOnSeekBarChangeListener(seekBarChangeListener);
+        lowerJointAngleSeekBar.setOnSeekBarChangeListener(seekBarChangeListener);
+        rotatorJointAngleSeekBar.setOnSeekBarChangeListener(seekBarChangeListener);
 
         previousGripperState = gripperToggle.isChecked();
-        previousUpperWristAngle = upperWristAngleSeekBar.getProgress();
-        previousLowerWristAngle = lowerWristAngleSeekBar.getProgress();
-        previousRotatorWristAngle = rotatorWristAngleSeekBar.getProgress();
+        previousUpperJointAngle = upperJointAngleSeekBar.getProgress();
+        previousLowerJointAngle = lowerJointAngleSeekBar.getProgress();
+        previousRotatorJointAngle = rotatorJointAngleSeekBar.getProgress();
 
         return view;
     }
@@ -145,9 +145,9 @@ public class ConfigureMenuFragment extends Fragment {
     }
 
     public interface OnRobotStateUpdated {
-        void onPositionChanged(int speed, int upperWristAngle, int lowerWristAngle, int rotatorWristAngle);
+        void onPositionChanged(int speed, int upperJointAngle, int lowerJointAngle, int rotatorJointAngle);
 
-        void onPositionSaved(boolean isInit, int speed, int upperWristAngle, int lowerWristAngle, int rotatorWristAngle);
+        void onPositionSaved(boolean isInit, int speed, int upperJointAngle, int lowerJointAngle, int rotatorJointAngle);
 
         void onGripperStateChanged(boolean released);
 

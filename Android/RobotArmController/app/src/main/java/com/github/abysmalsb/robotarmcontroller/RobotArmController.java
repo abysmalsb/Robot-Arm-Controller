@@ -1,6 +1,5 @@
 package com.github.abysmalsb.robotarmcontroller;
 
-import android.util.Log;
 import android.widget.TextView;
 
 import java.util.Iterator;
@@ -15,9 +14,9 @@ public class RobotArmController {
     private TextView goalText;
 
     private boolean initialized = false;
-    private int goalUpperWristAngle;
-    private int goalLowerWristAngle;
-    private int goalRotatorWristAngle;
+    private int goalUpperJointAngle;
+    private int goalLowerJointAngle;
+    private int goalRotatorJointAngle;
 
     public RobotArmController(List<String> initCommands, List<String> loopCommands, TCPClient client, TextView goalText) {
         List<String> mergedList = new LinkedList<String>();
@@ -44,12 +43,12 @@ public class RobotArmController {
 
     public void positionUpdate(String currentPosition) {
         String[] angles = currentPosition.split(" ");
-        int upperWristAngle = Integer.parseInt(angles[2]);
-        int lowerWristAngle = Integer.parseInt(angles[3]);
-        int rotatorWristAngle = Integer.parseInt(angles[4]);
-        if (goalUpperWristAngle == upperWristAngle
-                && goalLowerWristAngle == lowerWristAngle
-                && goalRotatorWristAngle == rotatorWristAngle) {
+        int upperJointAngle = Integer.parseInt(angles[2]);
+        int lowerJointAngle = Integer.parseInt(angles[3]);
+        int rotatorJointAngle = Integer.parseInt(angles[4]);
+        if (goalUpperJointAngle == upperJointAngle
+                && goalLowerJointAngle == lowerJointAngle
+                && goalRotatorJointAngle == rotatorJointAngle) {
             if (commands.hasNext()) {
                 String command = commands.next();
                 robot.sendMessage(command);
@@ -68,9 +67,9 @@ public class RobotArmController {
     private void updateGoals(String command) {
         String[] angles = command.split(" ");
         if (angles[0].equals("A")) {
-            goalUpperWristAngle = Integer.parseInt(angles[2]);
-            goalLowerWristAngle = Integer.parseInt(angles[3]);
-            goalRotatorWristAngle = Integer.parseInt(angles[4]);
+            goalUpperJointAngle = Integer.parseInt(angles[2]);
+            goalLowerJointAngle = Integer.parseInt(angles[3]);
+            goalRotatorJointAngle = Integer.parseInt(angles[4]);
         }
     }
 }
